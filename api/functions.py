@@ -1,15 +1,14 @@
 import os, glob
 import subprocess
-import config as cfg
 
-def find_xstage_files(sort = False):
-    names = glob.glob(os.path.join(cfg.SEARCH_DIR,"**\\*.xstage"), recursive=True)
+def find_xstage_files(dir, sort = False):
+    names = glob.glob(os.path.join(dir,"**\\*.xstage"), recursive=True)
     return names
 
-def group_xstage_files():
+def group_xstage_files(dir):
     #A01_CMP_JDoe  {idx}{typ}{shot_name}.xstage
     shots = dict()
-    for fname in find_xstage_files():
+    for fname in find_xstage_files(dir):
         data = os.path.basename(fname).split("_")
         snum = data[0]
         typ = data[1]
@@ -22,8 +21,8 @@ def group_xstage_files():
         shots[name][snum][typ.upper()] = fname
     return shots
 
-def render_latests():
-    jobs = group_xstage_files()
+def render_latests(cfg):
+    jobs = group_xstage_files(cfg.SEARCH_DIR)
     for jname, jdata in jobs.items():
         # latest_version_idx = sorted(jdata)[-1]
         for snum, version_data in jdata.items():
@@ -41,8 +40,8 @@ def render_latests():
             if typ != None:
                 # cmd = f"{HARMONY_EXE} -batch {fname}"
                 print(snum, typ, jname)
-                completed = subprocess.run([cfg.HARMONY_EXE, fname], shell=True, capture_output=True)
-                # print(completed)
+                completed = subprocess.run([cfg.HARMONY_EXE,"-batch",fname], shell=True, capture_output=True)
+                print(completed)
             # print(cmd)
     # print(jobs)
 
