@@ -24,12 +24,9 @@ def group_xstage_files():
 
 def render_latests():
     jobs = group_xstage_files()
-    # print (*list(jobs.keys()), sep="\n")
     for jname, jdata in jobs.items():
         # latest_version_idx = sorted(jdata)[-1]
         for snum, version_data in jdata.items():
-            # latest_version = jdata[latest_version_idx]
-
             typ = None
             # Search for .xstage files containing "CMP" in the filename and write their paths to the output file
             if "CMP" in version_data:
@@ -44,30 +41,10 @@ def render_latests():
             if typ != None:
                 # cmd = f"{HARMONY_EXE} -batch {fname}"
                 print(snum, typ, jname)
-                completed = subprocess.run([cfg.HARMONY_EXE, '-batch', fname], shell=True, capture_output=True)
+                completed = subprocess.run([cfg.HARMONY_EXE, fname], shell=True, capture_output=True)
                 # print(completed)
             # print(cmd)
     # print(jobs)
 
 if __name__ == "__main__":
     render_latests()
-
-# for /d /r "%search_dir%" %%d in (*) do (
-#     set cmp_file=
-#     set pnt_file=
-#     set cln_file=
-
-#     for %%f in ("%%d\*.xstage") do (
-#         set filename=%%~nf
-#         set cmp=!filename:CMP=!
-#         set pnt=!filename:PNT=!
-#         set cln=!filename:CLN=!
-
-#         if not "!cmp!"=="!filename!" (
-#             set cmp_file=%%~ff
-#         ) else if not "!pnt!"=="!filename!" (
-#             set pnt_file=%%~ff
-#         ) else if not "!cln!"=="!filename!" (
-#             set cln_file=%%~ff
-#         )
-#  "C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 21 Premium\win64\bin\HarmonyPremium.exe" -batch "%%a"
