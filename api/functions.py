@@ -1,10 +1,9 @@
 import os, glob
 import subprocess
+from settings import settings
 
 #SEARCH_DIR="E:\root\2022.anim.proj.APSscreamwriters\shots\CMP\""
-SEARCH_DIR="C:\\Users\\391524\\Documents\\test_shots\\"
-toon_boom_path = r'C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 21 Premium\win64\bin'
-HARMONY_EXE = os.path.join(toon_boom_path, 'HarmonyPremium.exe')
+
 
 
 def find_xstage_files(sort = False):
