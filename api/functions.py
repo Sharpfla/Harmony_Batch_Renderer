@@ -2,47 +2,63 @@ import os, glob
 import subprocess
 
 #SEARCH_DIR="E:\root\2022.anim.proj.APSscreamwriters\shots\CMP\""
-SEARCH_DIR="../test_shots"
+SEARCH_DIR="E:\\root\\2022.anim.proj.APSscreamwriters\\shots\\CMP\\C_SEQ"
+HARMONY_EXE = "C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 22 Premium\win64\bin\HarmonyPremium.exe"
 
 def find_xstage_files(sort = False):
-    names = glob.glob(os.path.join(SEARCH_DIR,"*.xstage"))
+    names = glob.glob(os.path.join(SEARCH_DIR,"**\\*.xstage"), recursive=True)
     return names
 
 def group_xstage_files():
     #A01_CMP_JDoe  {idx}{typ}{shot_name}.xstage
-    groups = dict()
+    shots = dict()
     for fname in find_xstage_files():
-        fname = os.path.basename(fname)
-        data = fname.split("_")
-        ver = data[0]
+        data = os.path.basename(fname).split("_")
+        snum = data[0]
         typ = data[1]
-        shot_name = "_".join(data[2:])
+        name = "_".join(data[2:]).strip()
+        # print(f"Name:{name}\nVer:{snum}\nTyp:{typ}\nPath:{fname}\n\n")
 
-        if shot_name not in groups:
-            groups[shot_name] = dict()
-
-        if ver not in groups[shot_name]:
-            groups[shot_name][ver] = dict()
-            groups[shot_name][ver]["types"] = set()
-        groups[shot_name][ver]["types"].add(typ.upper())
-
+        if name not in shots:
+            shots[name] = dict()
+        if snum not in shots[name]:
+            shots[name][snum] = dict()
+        shots[name][snum][typ.upper()] = fname
+    return shots
 
 def render_latests():
     jobs = group_xstage_files()
+    # print (*list(jobs.keys()), sep="\n")
     for jname, jdata in jobs.items():
-        latest_version = sorted(jdata)[-1]
+        # latest_version_idx = sorted(jdata)[-1]
+        for snum, version_data in jdata.items():
+            # latest_version = jdata[latest_version_idx]
 
-        # Search for .xstage files containing "CMP" in the filename and write their paths to the output file
-        if "CMP" in latest_version["types"]:
-            subprocess.call([f"'C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 21 Premium\win64\bin\HarmonyPremium.exe' -batch {fname}"])
-        elif "PNT" in latest_version["types"]:
-            subprocess.call([f"'C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 21 Premium\win64\bin\HarmonyPremium.exe' -batch {fname}"])
+            typ = None
+            # Search for .xstage files containing "CMP" in the filename and write their paths to the output file
+            if "CMP" in version_data:
+                typ = "CMP"
+                fname = os.path.abspath(version_data['CMP'])
+            elif "PNT" in version_data:
+                typ = "PNT"
+                fname = os.path.abspath(version_data['PNT'])
+            elif "CLN" in version_data:
+                typ = "CLN"
+                fname = os.path.abspath(version_data['CLN'])
+            if typ != None:
+                # cmd = f"{HARMONY_EXE} -batch {fname}"
+                completed = subprocess.run([HARMONY_EXE, '-batch', fname], shell=True, capture_output=True)
+                print(completed)
+                print(jname, snum, typ)
+            # print(cmd)
+    # print(jobs)
+        
+    
+        # subprocess.call(cmd, shell=True)
+
+        
 if __name__ == "__main__":
     render_latests()
-    pass      
-# # Searching for xstage files with CMP, PNT, or CLN in their filename in %search_dir% and its subfolders...
-
-# if exist %output_file% del %output_file%
 
 # for /d /r "%search_dir%" %%d in (*) do (
 #     set cmp_file=
@@ -62,5 +78,4 @@ if __name__ == "__main__":
 #         ) else if not "!cln!"=="!filename!" (
 #             set cln_file=%%~ff
 #         )
-    
-# )
+#  "C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 21 Premium\win64\bin\HarmonyPremium.exe" -batch "%%a"
