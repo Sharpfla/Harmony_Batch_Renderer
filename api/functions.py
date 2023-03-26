@@ -45,6 +45,6 @@ def render_latests():
                 # print(completed)
             # print(cmd)
     # print(jobs)
-def
+
 if __name__ == "__main__":
     render_latests()
