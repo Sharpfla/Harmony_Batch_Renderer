@@ -5,7 +5,8 @@ SEARCH_DIR="E:\\root\\2022.anim.proj.APSscreamwriters\\shots\\CMP\\C_SEQ"
 
 # You can update these paths to include support for new versions
 VERBOSE = False
-CONFIG_SCRIPT = "/api/scripts/renderconfig.js"
+INSTALL_DIR = ""
+CONFIG_SCRIPT = os.path.join(INSTALL_DIR,"/api/scripts/renderconfig.js")
 
 supported_harmony_exes = {
     "V20": r"C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 20 Premium",
