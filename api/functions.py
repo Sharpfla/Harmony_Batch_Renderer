@@ -1,13 +1,9 @@
 import os, glob
 import subprocess
-from settings import settings
-
-#SEARCH_DIR="E:\root\2022.anim.proj.APSscreamwriters\shots\CMP\""
-
-
+import config as cfg
 
 def find_xstage_files(sort = False):
-    names = glob.glob(os.path.join(SEARCH_DIR,"**\\*.xstage"), recursive=True)
+    names = glob.glob(os.path.join(cfg.SEARCH_DIR,"**\\*.xstage"), recursive=True)
     return names
 
 def group_xstage_files():
@@ -18,7 +14,6 @@ def group_xstage_files():
         snum = data[0]
         typ = data[1]
         name = "_".join(data[2:]).strip()
-        # print(f"Name:{name}\nVer:{snum}\nTyp:{typ}\nPath:{fname}\n\n")
 
         if name not in shots:
             shots[name] = dict()
@@ -49,15 +44,11 @@ def render_latests():
             if typ != None:
                 # cmd = f"{HARMONY_EXE} -batch {fname}"
                 print(snum, typ, jname)
-                completed = subprocess.run([HARMONY_EXE, '-batch', fname], shell=True, capture_output=True)
+                completed = subprocess.run([cfg.HARMONY_EXE, '-batch', fname], shell=True, capture_output=True)
                 # print(completed)
             # print(cmd)
     # print(jobs)
-        
-    
-        # subprocess.call(cmd, shell=True)
 
-        
 if __name__ == "__main__":
     render_latests()
 
