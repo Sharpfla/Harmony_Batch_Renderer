@@ -14,11 +14,12 @@ supported_harmony_exes = {
     "V22": r"C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 22 Premium"
 }
 SELECTED_HARMONY_VERSION = "V22"
-HARMONY_EXE = os.path.join(supported_harmony_exes[SELECTED_HARMONY_VERSION],r"\win64\bin\HarmonyPremium.exe -batch -config "+ CONFIG_SCRIPT)
+HARMONY_EXE = os.path.join(supported_harmony_exes[SELECTED_HARMONY_VERSION], \
+    r"\win64\bin\HarmonyPremium.exe")
 
 version_found = os.path.isfile(HARMONY_EXE)
 
 if not version_found:
     raise(RuntimeError(f"The selected version: {HARMONY_EXE} \nCould not be Found \n Exiting....."))
-else:
-    pass
+
+HARMONY_EXE += f" -batch -config {CONFIG_SCRIPT}"
