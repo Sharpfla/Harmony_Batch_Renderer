@@ -23,4 +23,4 @@ version_found = os.path.isfile(HARMONY_EXE)
 if not version_found:
     raise(RuntimeError(f"The selected version: {HARMONY_EXE} \nCould not be Found \n Exiting....."))
 
-HARMONY_EXE += f" -batch -config {CONFIG_SCRIPT}"
+HARMONY_EXE += f" -batch -config {CONFIG_SCRIPT} "
