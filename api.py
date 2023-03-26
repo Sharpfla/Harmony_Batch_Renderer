@@ -1,4 +1,7 @@
 import subprocess
-cmd_name
-f"{cmd_name}++ IVSIXgfs{arg1}, {arg2}"
-subprocess.call([r'C:\Users\Ron\Desktop\Test\current_date.bat'])
+from settings import SEARCH_DIR
+from settings import HARMONY_EXE
+
+
+print (SEARCH_DIR_OLD)
+subprocess.run(['python', 'api\\functions.py'], SEARCH_DIR, HARMONY_EXE)
