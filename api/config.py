@@ -1,6 +1,6 @@
 import os
 
-SEARCH_DIR="E:\\root\\2022.anim.proj.APSscreamwriters\\shots\\CMP\\C_SEQ"
+SEARCH_DIR=r"E:\\root\\2022.anim.proj.APSscreamwriters\\shots\\CMP\\C_SEQ"
 # TOON_BOOM_PATH = r'C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 21 Premium\win64\bin'
 
 # You can update these paths to include support for new versions
@@ -23,4 +23,4 @@ version_found = os.path.isfile(HARMONY_EXE)
 if not version_found:
     raise(RuntimeError(f"The selected version: {HARMONY_EXE} \nCould not be Found \n Exiting....."))
 
-HARMONY_EXE += f" -batch -config {CONFIG_SCRIPT}"
+HARMONY_EXE += f" -batch -config {CONFIG_SCRIPT} "
