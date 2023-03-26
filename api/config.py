@@ -6,7 +6,7 @@ SEARCH_DIR=r"C:\Users\391524\Documents\test_shots\test_shots"
 # You can update these paths to include support for new versions
 VERBOSE = False
 INSTALL_DIR = r"C:\Users\391524\Harmony_Batch_Renderer"
-CONFIG_SCRIPT = os.path.join(INSTALL_DIR,"/api/scripts/renderconfig.js")
+# CONFIG_SCRIPT = os.path.join(INSTALL_DIR,"/api/scripts/renderconfig.js")
 
 supported_harmony_exes = {
     "V20": r"C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 20 Premium",
@@ -23,4 +23,4 @@ version_found = os.path.isfile(HARMONY_EXE)
 if not version_found:
     raise(RuntimeError(f"The selected version: {HARMONY_EXE} \nCould not be Found \n Exiting....."))
 
-HARMONY_EXE += f" -batch -config {CONFIG_SCRIPT} "
+HARMONY_EXE += f" -batch "# -config {CONFIG_SCRIPT} "
