@@ -15,3 +15,6 @@ SETUP
 3. Run main.py
     - Say no to changing search directory (will be better implemented in later versions)
     - Enter the same harmony version as you entered in config.py
+
+Future goals:
+    I'd like to add use of harmony's javascript library to allow specifying resolution, output type, and output location
