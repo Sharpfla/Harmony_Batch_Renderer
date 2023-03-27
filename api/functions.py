@@ -24,7 +24,6 @@ def group_xstage_files(dir):
 def render_latests(cfg):
     jobs = group_xstage_files(cfg.SEARCH_DIR)
     for jname, jdata in jobs.items():
-        # latest_version_idx = sorted(jdata)[-1]
         for snum, version_data in jdata.items():
             typ = None
             # Search for .xstage files containing "CMP" in the filename and write their paths to the output file
@@ -38,12 +37,10 @@ def render_latests(cfg):
                 typ = "CLN"
                 fname = os.path.abspath(version_data['CLN'])
             if typ != None:
-                # cmd = f"{HARMONY_EXE} -batch {fname}"
                 print(snum, typ, jname)
                 completed = subprocess.run([cfg.HARMONY_EXE,"-batch",fname], shell=True, capture_output=True)
                 print(completed)
-            # print(cmd)
-    # print(jobs)
+
 
 if __name__ == "__main__":
     render_latests()

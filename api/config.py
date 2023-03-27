@@ -1,12 +1,10 @@
 import os
 class config:
     SEARCH_DIR=r"E:\root\2022.anim.proj.APSscreamwriters\shots\CMP\C_SEQ"
-    # TOON_BOOM_PATH = r'C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 21 Premium\win64\bin'
 
     # You can update these paths to include support for new versions
     VERBOSE = False
     INSTALL_DIR = r"C:\Users\Sharp\Harmony_Batch_Renderer"
-    # CONFIG_SCRIPT = os.path.join(INSTALL_DIR,"/api/scripts/renderconfig.js")
 
     supported_harmony_exes = {
         "V20": r"C:\Program Files (x86)\Toon Boom Animation\Toon Boom Harmony 20 Premium",
@@ -22,5 +20,3 @@ class config:
 
     if not version_found:
         raise(RuntimeError(f"The selected version: {HARMONY_EXE} \nCould not be Found \n Exiting....."))
-
-    # HARMONY_EXE += f" -config {CONFIG_SCRIPT} "

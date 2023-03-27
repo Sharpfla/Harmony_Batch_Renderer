@@ -32,7 +32,6 @@ UPDATE_SEARCH_DIR = prompt_YN("Would you like to change the search directory")
 
 if UPDATE_SEARCH_DIR == True:
     print("updated")
-    # cfg.SEARCH_DIR=NEW_SEARCH_DIR
 
 cfg.SELECTED_HARMONY_VERSION = prompt_list_select(base_text = "Which version of Harmony would you like to render from?",  options= ["V20", "V21", "V21.1", "V22"])
 
