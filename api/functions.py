@@ -1,7 +1,10 @@
 import os, glob
 import subprocess
+import logging
 
-def find_xstage_files(dir, sort = False):
+logging.basicConfig(filename='rendered_shots.txt', level=logging.DEBUG)
+
+def find_xstage_files(dir, sort=False):
     names = glob.glob(os.path.join(dir,"**\\*.xstage"), recursive=True)
     return names
 
@@ -11,14 +14,18 @@ def group_xstage_files(dir):
     for fname in find_xstage_files(dir):
         data = os.path.basename(fname).split("_")
         snum = data[0]
-        typ = data[1]
+        if len(data) >= 2: # added check for length of data
+            typ = data[1]
+        else:
+            typ = None
         name = "_".join(data[2:]).strip()
 
         if name not in shots:
             shots[name] = dict()
         if snum not in shots[name]:
             shots[name][snum] = dict()
-        shots[name][snum][typ.upper()] = fname
+        if typ != None: # only add to dictionary if typ is not None
+            shots[name][snum][typ.upper()] = fname
     return shots
 
 def render_latests(cfg):
@@ -39,8 +46,14 @@ def render_latests(cfg):
             if typ != None:
                 print(snum, typ, jname)
                 completed = subprocess.run([cfg.HARMONY_EXE,"-batch",fname], shell=True, capture_output=True)
-                print(completed)
+                logging.debug(f'{snum}, {typ}, {jname}')
+                # print(completed)
 
 
 if __name__ == "__main__":
-    render_latests()
+    # Example usage
+    class Config:
+        SEARCH_DIR = "C:/path/to/search/dir"
+        HARMONY_EXE = "C:/path/to/harmony.exe"
+    cfg = Config()
+    render_latests(cfg)
