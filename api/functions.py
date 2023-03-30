@@ -8,9 +8,6 @@ from api.createskiplist import skip
 
 logging.basicConfig(filename='rendered_shots.txt', level=logging.DEBUG, filemode='a', format='%(message)s %(asctime)s')
 
-# log a message with the current time and date
-logging.debug('new render session')
-
 # get the current date and time
 now = datetime.datetime.now()
 
