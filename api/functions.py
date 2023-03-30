@@ -6,7 +6,7 @@ from api.createskiplist import skip
 
 
 
-logging.basicConfig(filename='rendered_shots.txt', level=logging.DEBUG, filemode='a', format='%(message)s %(asctime)s')
+logging.basicConfig(filename='all_rendered_shots.txt', level=logging.DEBUG, filemode='a', format='%(message)s %(asctime)s')
 
 # get the current date and time
 now = datetime.datetime.now()
@@ -24,14 +24,14 @@ def group_xstage_files(dir):
     shots = dict()
     for fname in find_xstage_files(dir):
         data = os.path.basename(fname).split("_")
+        extension = data[-1].split(".")[-1] if "." in data[-1] else None
         snum = data[0]
+        print(data)
         if len(data) >= 2: # added check for length of data
             typ = data[1]
         else:
             typ = None
 
-        if snum in skip.skiplist:
-            typ = None
 
 
         name = "_".join(data[2:]).strip()
@@ -59,6 +59,8 @@ def render_latests(cfg):
             elif "CLN" in version_data:
                 typ = "CLN"
                 fname = os.path.abspath(version_data['CLN'])
+            if snum in skip.skiplist:
+                typ = None
             if typ != None:
                 print(snum, typ, jname)
                 completed = subprocess.run([cfg.HARMONY_EXE,"-batch",fname], shell=True, capture_output=True)

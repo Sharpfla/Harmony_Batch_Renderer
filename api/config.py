@@ -1,6 +1,6 @@
 import os
 class config:
-    SEARCH_DIR=r"R:\APS\APSFleischer\SCREAM WRITERS EDIT\Batch\Harmony_Batch_Renderer\test_shots"
+    SEARCH_DIR=r"R:\APS\APSFleischer\SCREAM WRITERS EDIT\harmony_files"
 
     # You can update these paths to include support for new versions
     VERBOSE = False
