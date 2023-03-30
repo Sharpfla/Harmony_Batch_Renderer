@@ -2,7 +2,7 @@ import os, glob
 import subprocess
 import logging
 import datetime
-
+from api.createskiplist import skip
 
 
 
@@ -32,6 +32,11 @@ def group_xstage_files(dir):
             typ = data[1]
         else:
             typ = None
+
+        if snum in skip.skiplist:
+            typ = None
+
+
         name = "_".join(data[2:]).strip()
 
         if name not in shots:
