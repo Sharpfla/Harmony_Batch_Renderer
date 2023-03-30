@@ -1,1 +1,6 @@
-DEBUG:root:Z4, PNT, JDOE.xstage
+new render session 2023-03-30 13:23:23,754
+A01, CMP, JDoe.xstage 2023-03-30 13:23:27,418
+A02, PNT, JDoe.xstage 2023-03-30 13:23:28,815
+new render session 2023-03-30 13:24:19,373
+A01, CMP, JDoe.xstage 2023-03-30 13:24:23,119
+A02, PNT, JDoe.xstage 2023-03-30 13:24:24,522
