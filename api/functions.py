@@ -6,21 +6,6 @@ import datetime
 
 logging.basicConfig(filename='all_rendered_shots.txt', level=logging.DEBUG, filemode='a', format='%(message)s %(asctime)s')
 
-class skip:
-    # open the text file in read mode
-    with open('skiplist.txt', 'r') as file:
-        # read the contents of the file
-        contents = file.read()
-
-        # split the contents of the file into a list of strings, using a comma as the delimiter
-        skiplist = contents.split(',')
-
-        # convert the list of strings to a list of integers
-        skiplist = [str(x) for x in skiplist]
-
-    # print the list of values
-    print(skiplist)
-
 # get the current date and time'
 def shot_name2num(filename):
     filename = os.path.basename(filename) 
@@ -30,10 +15,18 @@ def shot_name2num(filename):
     return true_ver_num
 
 now = datetime.datetime.now()
-def render_latests(cfg):
+def render_latests(cfg, skipfile = 'skiplist.txt'):
     test_shots = search_for_shots(cfg.SEARCH_DIR)
+    
+    # open the text file in read mode
+    with open(skipfile, 'r') as file:
+        # read the contents of the file
+        skiplist = []
+        for line in file.readlines():
+            skiplist.append(line.strip()) # Remove newline characters
+
     for shot in sorted(test_shots, key=shot_name2num):
-        if shot in skip.skiplist:
+        if shot in skiplist:
             continue
 
         latest_version = min(test_shots[shot], key=lambda ext: cfg.RENDER_ORDER.get(ext.upper(), 1000))
