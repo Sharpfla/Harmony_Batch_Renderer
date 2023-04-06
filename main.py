@@ -1,5 +1,5 @@
 import subprocess
-from api.config import config as cfg 
+from api.config import Config as cfg 
 import api
 from api.functions import render_latests
 

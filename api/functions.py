@@ -30,18 +30,25 @@ def render_latests(cfg, skipfile = 'skiplist.txt'):
             continue
 
         latest_version = min(test_shots[shot], key=lambda ext: cfg.RENDER_ORDER.get(ext.upper(), 1000))
-        print(f"Rendering {test_shots[shot][latest_version]}")
-        # completed = subprocess.run([cfg.HARMONY_EXE,"-batch",fname], shell=True, capture_output=True)
-        # logging.debug(f'{typ}, {jname}')
+        fname = test_shots[shot][latest_version]
+        print(f"Rendering {fname}")
+        completed = subprocess.run([cfg.HARMONY_EXE,"-batch",fname], shell=True, capture_output=True)
+        logging.debug(f'{shot}, {fname}')
         # print(completed)
 
 def search_for_shots(dir):
     #A01_CMP_JDoe {idx}{typ}{shot_name}.xstage
     shots = dict()
-    for fname in glob.glob(os.path.join(dir,"*.xstage"), recursive=True):
+    for fname in glob.glob(os.path.join(dir,"**\\*.xstage"), recursive=True):
+        try:
+            shot_name2num(fname)
+        except:
+            continue
+
         data = os.path.basename(fname).split("_")
         snum = data[0]
         typ = data[1]
+        
         if snum not in shots:
             shots[snum] = dict()
         if typ not in shots[snum]:
@@ -49,13 +56,7 @@ def search_for_shots(dir):
     return shots
 
 if __name__ == "__main__":
-    # Example usage
-    class Config:
-        SEARCH_DIR = "C:/path/to/search/dir"
-        HARMONY_EXE = "C:/path/to/harmony.exe"
-        RENDER_ORDER = {"CMP": 0, "PNT": 1, "CLN": 2, "RUF": 3, "POS": 4}
-        
+    from api.config import Config
     cfg = Config()
-    cfg.SEARCH_DIR = "/Users/willwalker/Harmony_Batch_Renderer/test_shots/"
-
+    # cfg.SEARCH_DIR = ... 
     render_latests(cfg)
