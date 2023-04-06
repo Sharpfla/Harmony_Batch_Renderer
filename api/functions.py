@@ -33,6 +33,18 @@ def render_latests(cfg, skipfile = 'skiplist.txt'):
         fname = test_shots[shot][latest_version]
         print(f"Rendering {fname}")
         completed = subprocess.run([cfg.HARMONY_EXE,"-batch",fname], shell=True, capture_output=True)
+        stage_dir = os.path.dirname(file_path)
+        for filename in os.listdir(stage_dir):
+            # Check if the file has a .tga extension and the prefix
+            if filename.endswith('.tga') and filename.startswith(prefix):
+            # Construct the full path to the source file
+            src_path = os.path.join(stage_dir, filename)
+            # Construct the full path to the destination file
+            dest_path = os.path.join(dest_dir, filename)
+            # Use shutil.move() to move the file to the destination directory
+            shutil.move(src_path, dest_path)
+            print(f"Moved {filename} to {dest_dir}")
+
         logging.debug(f'{shot}, {fname}')
         # print(completed)
 
